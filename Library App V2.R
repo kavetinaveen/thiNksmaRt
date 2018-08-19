@@ -7,12 +7,19 @@ setwd(filepath)
 
 # Loading required packages
 # ==============================
-library(data.table)
-library(openxlsx)
-library(shiny)
-library(shinydashboard)
-library(rhandsontable)
-library(bit64)
+# Loading required packages
+# ===========================
+inst_pack <- function(req_pack){
+  new_pack <- req_pack[!(req_pack %in% installed.packages())]
+  if(length(new_pack)){
+    cat("Installing the packages: ", new_pack, "\n")
+    install.packages(new_pack, dependencies = TRUE)
+  }
+  sapply(req_pack, require, character.only = TRUE)
+}
+
+Required_packages <- c("data.table", "openxlsx", "shiny", "shinydashboard", "rhandsontable", "bit64")
+inst_pack(Required_packages)
 
 # Reading data
 # ==============================
